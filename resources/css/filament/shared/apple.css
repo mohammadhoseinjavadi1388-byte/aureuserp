@@ -1,0 +1,428 @@
+/* ==========================================================================
+   Apple design layer
+   --------------------------------------------------------------------------
+   Loaded after shared/theme.css and shared/compact.css. The rules behind every
+   value here are written down in AGENTS.md ("Apple Design Rules").
+   Sections: tokens, typography, response, materials, depth, forms,
+   navigation, touch, accessibility.
+   ========================================================================== */
+
+/* Tokens ------------------------------------------------------------------ */
+
+:root {
+    /* Critically damped feel: fast start, soft settle, no overshoot. */
+    --apple-ease: cubic-bezier(0.32, 0.72, 0, 1);
+    --apple-press-duration: 100ms;
+    --apple-move-duration: 350ms;
+
+    --apple-radius-control: 0.625rem;
+    --apple-radius-card: 0.875rem;
+    --apple-radius-sheet: 1.125rem;
+
+    --apple-material-bar: rgb(255 255 255 / 0.72);
+    --apple-material-popover: rgb(255 255 255 / 0.8);
+    --apple-material-edge: rgb(255 255 255 / 0.5);
+    --apple-hairline: rgb(0 0 0 / 0.08);
+    --apple-scrim: rgb(0 0 0 / 0.32);
+
+    --apple-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 1px rgb(0 0 0 / 0.02);
+    --apple-shadow-popover: 0 10px 30px -8px rgb(0 0 0 / 0.18), 0 2px 6px rgb(0 0 0 / 0.06);
+    --apple-shadow-sheet: 0 30px 70px -20px rgb(0 0 0 / 0.35), 0 8px 20px rgb(0 0 0 / 0.08);
+}
+
+.dark {
+    --apple-material-bar: rgb(24 24 27 / 0.72);
+    --apple-material-popover: rgb(32 32 36 / 0.8);
+    --apple-material-edge: rgb(255 255 255 / 0.08);
+    --apple-hairline: rgb(255 255 255 / 0.1);
+    --apple-scrim: rgb(0 0 0 / 0.55);
+
+    --apple-shadow-card: 0 1px 2px rgb(0 0 0 / 0.3);
+    --apple-shadow-popover: 0 10px 30px -8px rgb(0 0 0 / 0.6), 0 2px 6px rgb(0 0 0 / 0.3);
+    --apple-shadow-sheet: 0 30px 70px -20px rgb(0 0 0 / 0.75), 0 8px 20px rgb(0 0 0 / 0.35);
+}
+
+/* Typography ---------------------------------------------------------------
+   System font first (it ships its own optical sizing and tracking tables).
+   Right-to-left locales set their own font in support::rtl.styles. */
+
+[dir='ltr'] .fi-body,
+html:not([dir]) .fi-body {
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', var(--font-family),
+        system-ui, sans-serif;
+}
+
+.fi-body {
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Tracking is size-specific: tighten large text, leave body near zero. */
+.fi-header-heading,
+.fi-simple-header-heading {
+    letter-spacing: -0.022em;
+    line-height: 1.15;
+}
+
+.fi-section .fi-section-header-heading,
+.fi-ta-ctn .fi-ta-header-heading,
+.fi-modal-heading,
+.fi-topbar-app-name {
+    letter-spacing: -0.012em;
+}
+
+.fi-wi-stats-overview-stat-value {
+    letter-spacing: -0.02em;
+}
+
+/* Numbers in tables line up column by column. */
+.fi-ta-cell,
+.fi-wi-stats-overview-stat-value {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Arabic-script letters join to each other. Any letter-spacing cuts those
+   joins, and there are no capital letters, so both are switched off. */
+[dir='rtl'] body * {
+    letter-spacing: 0 !important;
+}
+
+[dir='rtl'] .fi-sidebar-group-label,
+[dir='rtl'] .fi-ta-header-cell {
+    text-transform: none;
+}
+
+[lang='fa'] .fi-header-heading,
+[lang='fa'] .fi-simple-header-heading {
+    line-height: 1.45;
+}
+
+[lang='fa'] .fi-ta-header-cell,
+[lang='fa'] .fi-sidebar-group-label {
+    font-size: var(--text-xs);
+}
+
+/* Response: feedback on press, instantly --------------------------------- */
+
+.fi-btn,
+.fi-icon-btn,
+.fi-link,
+.fi-tabs-item,
+.fi-dropdown-list-item,
+.fi-sidebar-item-btn,
+.fi-app-menu-item,
+.fi-topbar-item-btn,
+.fi-pagination-item-btn {
+    transition:
+        transform var(--apple-press-duration) ease-out,
+        background-color 150ms ease-out,
+        color 150ms ease-out,
+        box-shadow 150ms ease-out,
+        opacity 150ms ease-out;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.fi-btn:not(.fi-disabled):not(:disabled):active,
+.fi-icon-btn:not(.fi-disabled):not(:disabled):active,
+.fi-app-menu-item:active {
+    transform: scale(0.97);
+}
+
+.fi-tabs-item:active,
+.fi-dropdown-list-item:not(.fi-disabled):active,
+.fi-sidebar-item-btn:active,
+.fi-topbar-item-btn:active,
+.fi-pagination-item-btn:active {
+    transform: scale(0.985);
+}
+
+.fi-ta-row {
+    transition: background-color 120ms ease-out;
+}
+
+/* Materials: translucent chrome, content scrolls underneath ----------------
+   The blur sits on a pseudo-element so the bar itself never becomes a
+   containing block for fixed-position children (menus, overlays). */
+
+.fi-topbar,
+.fi-sidebar-header,
+.fi-app-menu-header {
+    position: relative;
+    isolation: isolate;
+    border-bottom-color: transparent;
+    background-color: transparent;
+    box-shadow: 0 1px 0 var(--apple-hairline);
+}
+
+.fi-app-menu-header {
+    position: fixed;
+}
+
+@media (max-width: 47.9375rem) {
+    .fi-app-menu-header {
+        position: relative;
+    }
+}
+
+.fi-topbar::before,
+.fi-sidebar-header::before,
+.fi-app-menu-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--apple-material-bar);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    pointer-events: none;
+}
+
+/* Popovers are a lighter, thicker material with a bright top edge. */
+.fi-dropdown-panel {
+    border-radius: var(--apple-radius-card);
+    background-color: var(--apple-material-popover);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+        inset 0 1px 0 var(--apple-material-edge),
+        0 0 0 1px var(--apple-hairline),
+        var(--apple-shadow-popover);
+}
+
+.fi-dropdown-list-item {
+    border-radius: 0.5rem;
+}
+
+.fi-no-notification {
+    border-radius: var(--apple-radius-card);
+    background-color: var(--apple-material-popover);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(28px) saturate(180%);
+    box-shadow:
+        inset 0 1px 0 var(--apple-material-edge),
+        0 0 0 1px var(--apple-hairline),
+        var(--apple-shadow-popover);
+}
+
+/* Depth: bigger surfaces read as thicker --------------------------------- */
+
+.fi-section:not(.fi-section-not-contained):not(.fi-aside),
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat,
+.fi-wi-widget > .fi-section,
+.fi-sc-wizard.fi-contained,
+.fi-sc-wizard:not(.fi-contained) .fi-sc-wizard-header {
+    border-radius: var(--apple-radius-card);
+    box-shadow:
+        0 0 0 1px var(--apple-hairline),
+        var(--apple-shadow-card);
+}
+
+/* Keep the joined "tabs on top of a table" shapes square where they meet. */
+.fi-table-views {
+    border-top-left-radius: var(--apple-radius-card);
+    border-top-right-radius: var(--apple-radius-card);
+}
+
+.fi-table-views + .fi-grid-col .fi-ta-ctn,
+.fi-page-content > .fi-sc > .fi-grid-col:has(> .fi-sc-component > .fi-sc-tabs:not(.fi-contained)) + .fi-grid-col .fi-ta-ctn,
+.fi-page-content > .fi-sc > .fi-grid-col > .fi-sc-component > .fi-sc-tabs:not(.fi-contained) > .fi-sc-tabs-tab.fi-active .fi-resource-relation-manager .fi-ta-ctn {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none;
+}
+
+/* A modal is a blocking task: dim and blur what is behind it. */
+.fi-modal-close-overlay {
+    background-color: var(--apple-scrim);
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    backdrop-filter: blur(8px) saturate(140%);
+}
+
+.fi-modal-window {
+    border-radius: var(--apple-radius-sheet);
+    box-shadow:
+        0 0 0 1px var(--apple-hairline),
+        var(--apple-shadow-sheet);
+    transition-timing-function: var(--apple-ease);
+}
+
+.fi-modal.fi-modal-slide-over > .fi-modal-window-ctn > .fi-modal-window {
+    border-radius: var(--apple-radius-sheet);
+}
+
+/* Forms ------------------------------------------------------------------- */
+
+.fi-btn {
+    border-radius: var(--apple-radius-control);
+}
+
+.fi-input-wrp,
+.fi-select-input,
+.fi-fo-rich-editor,
+.fi-fo-markdown-editor {
+    border-radius: var(--apple-radius-control);
+}
+
+.fi-input-wrp {
+    transition: box-shadow 150ms ease-out;
+}
+
+/* Soft focus halo around the control that has the keyboard. */
+.fi-input-wrp:not(.fi-disabled):not(.fi-invalid):not(:has(.fi-ac-action:focus)):focus-within {
+    box-shadow:
+        0 0 0 1px var(--color-primary-500),
+        0 0 0 4px color-mix(in oklab, var(--color-primary-500) 22%, transparent);
+}
+
+.fi-input-wrp.fi-invalid:not(.fi-disabled):focus-within {
+    box-shadow:
+        0 0 0 1px var(--color-danger-500),
+        0 0 0 4px color-mix(in oklab, var(--color-danger-500) 22%, transparent);
+}
+
+.fi-sc-fused-group .fi-input-wrp:focus-within,
+.fi-fo-table-repeater.fi-compact .fi-input-wrp:focus-within {
+    box-shadow: none;
+}
+
+.fi-btn:focus-visible,
+.fi-icon-btn:focus-visible,
+.fi-link:focus-visible,
+.fi-tabs-item:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+.fi-badge {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Navigation -------------------------------------------------------------- */
+
+.fi-sidebar-item-btn {
+    margin-inline: 0.5rem;
+    border-inline-start-width: 0;
+    border-radius: var(--apple-radius-control);
+    padding-inline: 0.75rem;
+}
+
+.fi-page-sub-navigation-sidebar .fi-sidebar-item-btn {
+    margin-inline: 0;
+}
+
+.fi-tabs.fi-page-sub-navigation-tabs,
+.fi-tabs.fi-chip-tabs,
+.fi-tabs.fi-record-navigation-tabs {
+    border-radius: var(--apple-radius-control);
+    box-shadow:
+        0 0 0 1px var(--apple-hairline),
+        var(--apple-shadow-card);
+}
+
+.fi-app-menu-item {
+    border-radius: var(--apple-radius-card);
+}
+
+/* Touch: fingers need a 44px target; a mouse does not --------------------- */
+
+@media (pointer: coarse) {
+    .fi-btn:not(.fi-ta .fi-btn) {
+        min-height: 2.75rem;
+    }
+
+    .fi-icon-btn:not(.fi-ta .fi-icon-btn) {
+        min-width: 2.75rem;
+        min-height: 2.75rem;
+    }
+
+    .fi-dropdown-list-item {
+        min-height: 2.75rem;
+    }
+}
+
+/* Accessibility: three independent user settings -------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+    .fi-btn,
+    .fi-icon-btn,
+    .fi-link,
+    .fi-tabs-item,
+    .fi-dropdown-list-item,
+    .fi-sidebar-item-btn,
+    .fi-app-menu-item,
+    .fi-topbar-item-btn,
+    .fi-pagination-item-btn {
+        transition:
+            background-color 150ms ease-out,
+            color 150ms ease-out,
+            opacity 150ms ease-out;
+    }
+
+    .fi-btn:active,
+    .fi-icon-btn:active,
+    .fi-app-menu-item:active,
+    .fi-tabs-item:active,
+    .fi-dropdown-list-item:active,
+    .fi-sidebar-item-btn:active,
+    .fi-topbar-item-btn:active,
+    .fi-pagination-item-btn:active {
+        transform: none !important;
+        opacity: 0.7;
+    }
+
+    .fi-modal-window {
+        transition-property: opacity;
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    :root {
+        --apple-material-bar: rgb(255 255 255);
+        --apple-material-popover: rgb(255 255 255);
+    }
+
+    .dark {
+        --apple-material-bar: rgb(24 24 27);
+        --apple-material-popover: rgb(32 32 36);
+    }
+
+    .fi-topbar::before,
+    .fi-sidebar-header::before,
+    .fi-app-menu-header::before,
+    .fi-dropdown-panel,
+    .fi-no-notification,
+    .fi-modal-close-overlay {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --apple-material-bar: rgb(255 255 255);
+        --apple-material-popover: rgb(255 255 255);
+        --apple-hairline: rgb(0 0 0 / 0.45);
+        --apple-scrim: rgb(0 0 0 / 0.6);
+    }
+
+    .dark {
+        --apple-material-bar: rgb(0 0 0);
+        --apple-material-popover: rgb(0 0 0);
+        --apple-hairline: rgb(255 255 255 / 0.55);
+        --apple-scrim: rgb(0 0 0 / 0.8);
+    }
+
+    .fi-topbar::before,
+    .fi-sidebar-header::before,
+    .fi-app-menu-header::before,
+    .fi-dropdown-panel,
+    .fi-no-notification {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+}

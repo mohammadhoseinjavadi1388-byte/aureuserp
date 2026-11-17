@@ -245,3 +245,88 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - IMPORTANT: Always use `search-docs` tool for version-specific Tailwind CSS documentation and updated code examples. Never rely on training data.
 - IMPORTANT: Activate `tailwindcss-development` every time you're working with a Tailwind CSS or styling-related task.
 </laravel-boost-guidelines>
+
+<apple-design-rules>
+=== apple design rules ===
+
+# Apple Design Rules
+
+Every UI change in this project (Filament panels, Blade views, the POS Vue app, CSS) must follow these rules. They come from Apple's WWDC design talks. The working implementation lives in `resources/css/filament/shared/apple.css`; read it before adding styles and reuse its `--apple-*` tokens instead of inventing new values.
+
+## Where things live
+
+- `resources/css/filament/shared/apple.css` — the Apple layer (tokens, type, press feedback, materials, depth, focus, accessibility). Imported last by `resources/css/filament/admin/theme.css` and `resources/css/filament/customer/theme.css`.
+- After any change to theme CSS run `npm run build:theme` and commit the rebuilt `public/css/filament/*/theme.css`. The panels load the built files, not the sources.
+
+## The eight principles (use these names when you reason about a design choice)
+
+1. **Purpose** — every element costs the user attention. Decide what not to build.
+2. **Agency** — the user stays in control. Undo for slips; a confirm dialog only for destructive, irreversible actions.
+3. **Responsibility** — ask only for what is needed, at the moment it is needed. Preview before money, stock or accounting postings change.
+4. **Familiarity** — things that look the same behave the same and live in the same place. Break a known pattern only with proof.
+5. **Flexibility** — works with mouse and finger, light and dark, left-to-right and right-to-left, every supported language.
+6. **Simplicity, not minimalism** — common path first, advanced options one level deeper. Clear hierarchy through order, spacing and contrast.
+7. **Craft** — no random values. Every spacing, radius, timing and colour comes from a token and can be defended.
+8. **Delight** — the result of the other seven, never decoration added on top.
+
+## Response
+
+- Give feedback on pointer-down, not on release. Pressable controls scale to `0.97` in `100ms ease-out` (already applied to `.fi-btn`, `.fi-icon-btn`; reuse the pattern for custom controls).
+- No artificial delays, debounces or timers on the input path unless they are essential.
+- During a drag, slider or sheet gesture, update the UI 1:1 with the pointer the whole way through.
+
+## Motion
+
+- Anything the user can touch or drag uses a spring, never a fixed-duration keyframe animation, so it can be grabbed and reversed mid-flight.
+- Default spring: critically damped (no bounce), response `0.3–0.4s`. Add a little bounce (damping about `0.8`) only when the gesture itself carried momentum (a flick or throw).
+- On release, pass the pointer velocity into the spring and project the landing point from that velocity before choosing a snap target.
+- Never block input while a transition runs. Animate from the value that is on screen now, not from the logical target.
+- Enter and exit along the same path. Popovers and menus grow from the control that opened them (`transform-origin` on the trigger).
+- For CSS-only state changes use `var(--apple-ease)`; animate only `transform` and `opacity`.
+- At a boundary, resist progressively (rubber-band). Never stop hard.
+
+## Materials and depth
+
+- Top bar, sidebar header and floating panels are translucent (`backdrop-filter`) with content scrolling underneath. Put the blur on a pseudo-element so the bar does not trap fixed-position children.
+- Never stack one light translucent surface on another.
+- Bigger surfaces read as thicker: use `--apple-shadow-card` for cards, `--apple-shadow-popover` for menus, `--apple-shadow-sheet` for modals.
+- A blocking task (modal) dims and blurs the background. A parallel, non-blocking panel uses translucency without a scrim.
+- Prefer a soft hairline (`--apple-hairline`) or a fade over a hard 1px divider under floating chrome.
+- Radii: controls `--apple-radius-control`, cards `--apple-radius-card`, modals and sheets `--apple-radius-sheet`.
+
+## Typography
+
+- Left-to-right locales use the system font stack. Persian uses the self-hosted Vazirmatn (`public/fonts/vazirmatn`); Arabic uses Cairo.
+- Tracking depends on size: large headings negative (`-0.022em`), body `0`. Never one letter-spacing for all sizes.
+- **Right-to-left scripts: letter-spacing must be `0` and `text-transform: uppercase` must not be used.** Arabic-script letters join to each other and tracking cuts the joins.
+- Build hierarchy from weight, size and leading together. Use `rem`/`em`, never fixed pixels, so the user's text-size setting is respected.
+- Numbers in tables use `font-variant-numeric: tabular-nums`.
+
+## Layout and right-to-left
+
+- Use logical properties and utilities only: `ms-*`, `me-*`, `ps-*`, `pe-*`, `start-*`, `end-*`, `border-s`, `text-start`. Never `ml-*`, `mr-*`, `left-*`, `right-*`, `text-left` in new code.
+- Direction-carrying icons (arrows, chevrons) must flip in right-to-left.
+- Emails, URLs, phone numbers, codes and amounts stay left-to-right inside right-to-left text.
+- Touch targets are at least 44px on coarse pointers; desktop density may stay compact.
+
+## Feedback and wording
+
+- Four kinds of feedback: status, completion, warning, error. Validate inline, not only on submit.
+- Every screen answers: where am I, where can I go, how do I get out.
+- Labels are specific ("Quotations", "Stock Moves"), never vague umbrellas.
+- No hard-coded user-facing strings. Every string goes through `__()` and must exist in every locale folder, including `fa`.
+
+## Accessibility (all three are required for any new surface)
+
+- `prefers-reduced-motion: reduce` — replace movement with a short opacity change; no scale, slide or bounce.
+- `prefers-reduced-transparency: reduce` — solid backgrounds, no blur.
+- `prefers-contrast: more` — solid backgrounds with a clearly visible border.
+- Every interactive element has a visible `:focus-visible` state.
+
+## Persian (fa) translation rules
+
+- Persian is a first-class locale (`config/app.php` → `supported_locales.fa`, right-to-left). When you add or change an English string, add the Persian one in the matching `lang/fa/` file in the same change.
+- Same keys, same order, placeholders (`:name`, `:count`) untouched.
+- Natural Iranian business Persian. Use ی and ک (not Arabic ي and ك) and the half-space (U+200C): «می‌شود»، «گزارش‌ها»، «به‌روزرسانی».
+- Fixed terms: Quotation «پیش‌فاکتور», Invoice «فاکتور», Bill «صورت‌حساب خرید», Vendor «تأمین‌کننده», Customer «مشتری», Warehouse «انبار», Journal Entry «سند حسابداری», Debit/Credit «بدهکار/بستانکار», Lead «سرنخ», Opportunity «فرصت», Time Off «مرخصی», Point of Sale «پایانه فروش», Draft «پیش‌نویس», Settings «تنظیمات».
+</apple-design-rules>

@@ -1,0 +1,97 @@
+<?php
+
+return [
+    'title' => 'آرتیکل‌های سند',
+
+    'navigation' => [
+        'title' => 'آرتیکل‌های سند',
+    ],
+
+    'table' => [
+        'total'   => 'جمع کل',
+        'columns' => [
+            'number'          => 'شماره',
+            'date'            => 'تاریخ',
+            'account'         => 'حساب',
+            'partner'         => 'طرف حساب',
+            'label'           => 'شرح',
+            'reference'       => 'مرجع',
+            'journal'         => 'دفتر روزنامه',
+            'debit'           => 'بدهکار',
+            'credit'          => 'بستانکار',
+            'balance'         => 'مانده',
+            'currency'        => 'ارز',
+            'company'         => 'شرکت',
+            'status'          => 'وضعیت',
+            'amount-currency' => 'مبلغ ارزی',
+            'amount-residual' => 'مبلغ باقی‌مانده',
+            'reconciled'      => 'تطبیق‌شده',
+            'due-date'        => 'تاریخ سررسید',
+        ],
+
+        'groups' => [
+            'journal-entry' => 'سند حسابداری',
+            'account'       => 'حساب',
+            'partner'       => 'طرف حساب',
+            'journal'       => 'دفتر روزنامه',
+            'date'          => 'تاریخ',
+            'invoice-date'  => 'تاریخ فاکتور',
+            'matching'      => 'تطبیق',
+            'status'        => 'وضعیت',
+            'company'       => 'شرکت',
+        ],
+
+        'filters' => [
+            'number'          => 'شماره',
+            'label'           => 'شرح',
+            'reference'       => 'مرجع',
+            'matching-number' => 'شماره تطبیق',
+            'account'         => 'حساب',
+            'partner'         => 'طرف حساب',
+            'journal'         => 'دفتر روزنامه',
+            'currency'        => 'ارز',
+            'company'         => 'شرکت',
+            'date'            => 'تاریخ',
+            'invoice-date'    => 'تاریخ فاکتور',
+            'due-date'        => 'تاریخ سررسید',
+            'discount-date'   => 'تاریخ تخفیف',
+            'debit'           => 'بدهکار',
+            'credit'          => 'بستانکار',
+            'balance'         => 'مانده',
+            'amount-currency' => 'مبلغ ارزی',
+            'amount-residual' => 'مبلغ باقی‌مانده',
+            'quantity'        => 'تعداد',
+            'price-unit'      => 'قیمت واحد',
+            'discount'        => 'تخفیف',
+            'reconciled'      => 'تطبیق‌شده',
+            'imported'        => 'درون‌ریزی‌شده',
+            'down-payment'    => 'پیش‌پرداخت',
+            'created-at'      => 'تاریخ ایجاد',
+            'updated-at'      => 'تاریخ به‌روزرسانی',
+        ],
+
+        'saved-filters' => [
+            'label'         => 'فیلترهای ذخیره‌شده',
+            'unposted'      => 'ثبت‌نشده',
+            'posted'        => 'ثبت‌شده',
+            'to-check'      => 'نیازمند بررسی',
+            'unreconciled'  => 'تطبیق‌نشده',
+            'with-residual' => 'دارای باقی‌مانده',
+            'sales'         => 'فروش',
+            'purchases'     => 'خرید',
+            'bank'          => 'بانک',
+            'cash'          => 'صندوق',
+            'credit'        => 'کارت اعتباری',
+            'miscellaneous' => 'متفرقه',
+            'payable'       => 'پرداختنی',
+            'receivable'    => 'دریافتنی',
+            'pl-accounts'   => 'حساب‌های سود و زیان',
+        ],
+
+        'toolbar-actions' => [
+            'export' => [
+                'label' => 'برون‌بری',
+            ],
+        ],
+    ],
+];

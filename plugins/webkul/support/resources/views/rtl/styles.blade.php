@@ -1,11 +1,32 @@
 @if (in_array(app()->getLocale(), $rtlLocales))
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    @if (app()->getLocale() === 'fa')
+        {{-- Persian: Vazirmatn is served from this app (public/fonts), so it also works where foreign font CDNs are slow or blocked. --}}
+        <link rel="preload" href="{{ asset('fonts/vazirmatn/Vazirmatn-Variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+
+        <style>
+            @font-face {
+                font-family: 'Vazirmatn';
+                src: url('{{ asset('fonts/vazirmatn/Vazirmatn-Variable.woff2') }}') format('woff2');
+                font-weight: 100 900;
+                font-style: normal;
+                font-display: swap;
+            }
+
+            body, .fi-body {
+                font-family: 'Vazirmatn', 'Noto Sans Arabic', Tahoma, sans-serif !important;
+            }
+        </style>
+    @else
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <style>
+            body, .fi-body {
+                font-family: 'Cairo', 'Noto Sans Arabic', sans-serif !important;
+            }
+        </style>
+    @endif
 
     <style>
-        body, .fi-body {
-            font-family: 'Cairo', 'Noto Sans Arabic', sans-serif !important;
-        }
-
         [dir="rtl"] .fi-topbar { direction: rtl; }
         [dir="rtl"] .fi-sidebar { direction: rtl; }
         [dir="rtl"] .fi-main { direction: rtl; }

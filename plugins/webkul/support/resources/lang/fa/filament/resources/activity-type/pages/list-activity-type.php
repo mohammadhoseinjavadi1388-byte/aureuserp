@@ -1,0 +1,14 @@
+<?php
+
+return [
+    'tabs' => [
+        'all'      => 'همه',
+        'archived' => 'بایگانی‌شده',
+    ],
+
+    'header-actions' => [
+        'create' => [
+            'label' => 'نوع فعالیت جدید',
+        ],
+    ],
+];

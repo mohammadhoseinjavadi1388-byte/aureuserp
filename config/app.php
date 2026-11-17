@@ -123,6 +123,12 @@ return [
             'flag'   => 'sa',
             'rtl'    => true,
         ],
+        'fa' => [
+            'label'  => 'Persian',
+            'native' => 'فارسی',
+            'flag'   => 'ir',
+            'rtl'    => true,
+        ],
         'es' => [
             'label'  => 'Spanish',
             'native' => 'Español',

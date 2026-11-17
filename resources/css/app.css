@@ -21,6 +21,20 @@
     font-family: 'Cairo', 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
 }
 
+/* Persian Font Support (self-hosted, no foreign CDN needed) */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/fonts/vazirmatn/Vazirmatn-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+[lang="fa"],
+[lang="fa"] body {
+    font-family: 'Vazirmatn', 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+
 /* Flexbox Direction Utilities for RTL */
 [dir="rtl"] .flex-row {
     flex-direction: row-reverse;

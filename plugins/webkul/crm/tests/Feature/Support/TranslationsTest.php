@@ -55,7 +55,7 @@ function crmPlaceholders(mixed $line): array
 
 it('ships a translation file for every english file', function (string $locale) {
     expect(array_keys(crmLangFiles($locale)))->toBe(array_keys(crmLangFiles('en')));
-})->with(['ar', 'es', 'fr', 'pt_BR']);
+})->with(['ar', 'fa', 'es', 'fr', 'pt_BR']);
 
 it('has exactly the english keys in every translation file', function (string $locale) {
     $translatedFiles = crmLangFiles($locale);
@@ -71,7 +71,7 @@ it('has exactly the english keys in every translation file', function (string $l
 
         expect($translatedKeys)->toBe($englishKeys, "{$locale}/{$relativePath}.php keys differ from English");
     }
-})->with(['ar', 'es', 'fr', 'pt_BR']);
+})->with(['ar', 'fa', 'es', 'fr', 'pt_BR']);
 
 it('keeps every placeholder in every translation', function (string $locale) {
     $translatedFiles = crmLangFiles($locale);
@@ -86,7 +86,7 @@ it('keeps every placeholder in every translation', function (string $locale) {
                 ->toBe(crmPlaceholders($line), "{$locale}/{$relativePath}.php [{$key}] placeholders differ from English");
         }
     }
-})->with(['ar', 'es', 'fr', 'pt_BR']);
+})->with(['ar', 'fa', 'es', 'fr', 'pt_BR']);
 
 it('leaves no translation empty when the english line has text', function (string $locale) {
     $translatedFiles = crmLangFiles($locale);
@@ -104,7 +104,7 @@ it('leaves no translation empty when the english line has text', function (strin
             expect(filled($translated[$key] ?? null))->toBeTrue("{$locale}/{$relativePath}.php [{$key}] is empty");
         }
     }
-})->with(['ar', 'es', 'fr', 'pt_BR']);
+})->with(['ar', 'fa', 'es', 'fr', 'pt_BR']);
 
 it('covers every supported application language', function () {
     $supportedLocales = array_keys(config('app.supported_locales'));
@@ -156,7 +156,7 @@ it('defines every static crm translation key referenced in code and views', func
 it('never names the functional reference product in any translation', function () {
     $forbiddenWord = strrev('oodo');
 
-    foreach (['en', 'ar', 'es', 'fr', 'pt_BR'] as $locale) {
+    foreach (['en', 'ar', 'fa', 'es', 'fr', 'pt_BR'] as $locale) {
         foreach (crmLangFiles($locale) as $relativePath => $path) {
             expect(stripos(File::get($path), $forbiddenWord))->toBeFalse("{$locale}/{$relativePath}.php mentions it");
         }
