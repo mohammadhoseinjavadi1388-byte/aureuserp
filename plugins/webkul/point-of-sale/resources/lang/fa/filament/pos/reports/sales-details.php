@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'title'                  => 'گزارش فروش روزانه :config',
+    'session'                => 'شناسه نوبت کاری: :session',
+    'as-of'                  => 'تا تاریخ :date',
+    'sales'                  => 'فروش',
+    'refunds'                => 'استرداد وجه',
+    'taxes-on-sales'         => 'مالیات فروش',
+    'taxes-on-refunds'       => 'مالیات استرداد وجه',
+    'total'                  => 'جمع کل',
+    'discount'               => 'تخفیف: :percent%',
+    'payments'               => 'پرداخت‌ها',
+    'discounts'              => 'تخفیف‌ها',
+    'number-of-discounts'    => 'تعداد تخفیف‌ها',
+    'amount-of-discounts'    => 'مبلغ تخفیف‌ها',
+    'invoices'               => 'فاکتورها',
+    'order'                  => 'سفارش :order',
+    'session-control'        => 'کنترل نوبت کاری صندوق',
+    'number-of-transactions' => 'تعداد تراکنش‌ها',
+    'name'                   => 'نام',
+    'expected'               => 'مورد انتظار',
+    'opening-note'           => 'یادداشت افتتاح نوبت کاری:',
+    'closing-note'           => 'یادداشت بستن نوبت کاری:',
+    'filename'               => 'گزارش فروش روزانه',
+];

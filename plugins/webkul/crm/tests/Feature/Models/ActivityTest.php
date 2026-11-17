@@ -214,4 +214,4 @@ it('translates every enum label in every supported language', function (string $
     foreach ([...ActivityDueStatus::cases(), ...OpportunityPriority::cases()] as $case) {
         expect($case->getLabel())->not->toStartWith('crm::');
     }
-})->with(['en', 'ar', 'es', 'fr', 'pt_BR']);
+})->with(['en', 'ar', 'fa', 'es', 'fr', 'pt_BR']);

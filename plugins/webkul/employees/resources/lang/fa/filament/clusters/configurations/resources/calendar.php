@@ -1,0 +1,177 @@
+<?php
+
+return [
+    'title' => 'برنامه‌های کاری',
+
+    'navigation' => [
+        'title' => 'برنامه‌های کاری',
+        'group' => 'کارمند',
+    ],
+
+    'groups' => [
+        'status'     => 'وضعیت',
+        'created-by' => 'ایجادکننده',
+        'created-at' => 'تاریخ ایجاد',
+        'updated-at' => 'تاریخ به‌روزرسانی',
+    ],
+
+    'form' => [
+        'sections' => [
+            'general' => [
+                'title'  => 'اطلاعات عمومی',
+                'fields' => [
+                    'name'                  => 'نام',
+                    'schedule-name'         => 'نام برنامه کاری',
+                    'schedule-name-tooltip' => 'لطفاً نامی گویا برای برنامه کاری وارد کنید.',
+                    'timezone'              => 'منطقه زمانی',
+                    'timezone-tooltip'      => 'لطفاً منطقه زمانی برنامه کاری را انتخاب کنید.',
+                    'company'               => 'شرکت',
+                ],
+            ],
+
+            'configuration' => [
+                'title'  => 'پیکربندی ساعات کاری',
+                'fields' => [
+                    'hours-per-day'                   => 'ساعت کار در روز',
+                    'hours-per-day-suffix'            => 'ساعت',
+                    'full-time-required-hours'        => 'ساعات موظفی تمام‌وقت',
+                    'full-time-required-hours-suffix' => 'ساعت در هفته',
+                ],
+            ],
+
+            'flexibility' => [
+                'title'  => 'انعطاف‌پذیری',
+                'fields' => [
+                    'status'                     => 'وضعیت',
+                    'two-weeks-calendar'         => 'تقویم دوهفته‌ای',
+                    'two-weeks-calendar-tooltip' => 'برنامه کاری دوهفته‌ای متناوب را فعال می‌کند.',
+                    'flexible-hours'             => 'ساعات کاری شناور',
+                    'flexible-hours-tooltip'     => 'به کارمندان اجازه می‌دهد ساعات کاری شناور داشته باشند.',
+                ],
+            ],
+        ],
+    ],
+
+    'table' => [
+        'columns' => [
+            'id'             => 'شناسه',
+            'name'           => 'نام برنامه کاری',
+            'timezone'       => 'منطقه زمانی',
+            'company'        => 'شرکت',
+            'flexible-hours' => 'ساعات کاری شناور',
+            'status'         => 'وضعیت',
+            'daily-hours'    => 'ساعات روزانه',
+            'created-by'     => 'ایجادکننده',
+            'created-at'     => 'تاریخ ایجاد',
+            'updated-at'     => 'تاریخ به‌روزرسانی',
+        ],
+
+        'filters' => [
+            'company'           => 'شرکت',
+            'is-active'         => 'وضعیت',
+            'two-week-calendar' => 'تقویم دوهفته‌ای',
+            'flexible-hours'    => 'ساعات کاری شناور',
+            'timezone'          => 'منطقه زمانی',
+            'name'              => 'نام برنامه کاری',
+            'attendance'        => 'حضور و غیاب',
+            'created-by'        => 'ایجادکننده',
+            'daily-hours'       => 'ساعات روزانه',
+            'updated-at'        => 'تاریخ به‌روزرسانی',
+            'created-at'        => 'تاریخ ایجاد',
+        ],
+
+        'groups' => [
+            'name'           => 'نام برنامه کاری',
+            'status'         => 'وضعیت',
+            'timezone'       => 'منطقه زمانی',
+            'flexible-hours' => 'ساعات کاری شناور',
+            'daily-hours'    => 'ساعات روزانه',
+            'created-by'     => 'ایجادکننده',
+            'created-at'     => 'تاریخ ایجاد',
+            'updated-at'     => 'تاریخ به‌روزرسانی',
+        ],
+
+        'actions' => [
+            'restore' => [
+                'notification' => [
+                    'title' => 'برنامه کاری بازیابی شد',
+                    'body'  => 'برنامه کاری با موفقیت بازیابی شد.',
+                ],
+            ],
+
+            'delete' => [
+                'notification' => [
+                    'title' => 'برنامه کاری حذف شد',
+                    'body'  => 'برنامه کاری با موفقیت حذف شد.',
+                ],
+            ],
+
+            'force-delete' => [
+                'notification' => [
+                    'title' => 'برنامه کاری برای همیشه حذف شد',
+                    'body'  => 'برنامه کاری با موفقیت برای همیشه حذف شد.',
+                ],
+            ],
+        ],
+
+        'bulk-actions' => [
+            'restore' => [
+                'notification' => [
+                    'title' => 'برنامه‌های کاری بازیابی شدند',
+                    'body'  => 'برنامه‌های کاری با موفقیت بازیابی شدند.',
+                ],
+            ],
+
+            'delete' => [
+                'notification' => [
+                    'title' => 'برنامه‌های کاری حذف شدند',
+                    'body'  => 'برنامه‌های کاری با موفقیت حذف شدند.',
+                ],
+            ],
+
+            'force-delete' => [
+                'notification' => [
+                    'title' => 'برنامه‌های کاری برای همیشه حذف شدند',
+                    'body'  => 'برنامه‌های کاری با موفقیت برای همیشه حذف شدند.',
+                ],
+            ],
+        ],
+    ],
+
+    'infolist' => [
+        'sections' => [
+            'general' => [
+                'title'   => 'اطلاعات عمومی',
+                'entries' => [
+                    'name'                  => 'نام',
+                    'schedule-name'         => 'نام برنامه کاری',
+                    'schedule-name-tooltip' => 'لطفاً نامی گویا برای برنامه کاری وارد کنید.',
+                    'timezone'              => 'منطقه زمانی',
+                    'timezone-tooltip'      => 'لطفاً منطقه زمانی برنامه کاری را انتخاب کنید.',
+                    'company'               => 'شرکت',
+                ],
+            ],
+
+            'configuration' => [
+                'title'   => 'پیکربندی ساعات کاری',
+                'entries' => [
+                    'hours-per-day'                   => 'ساعت کار در روز',
+                    'hours-per-day-suffix'            => ' ساعت',
+                    'full-time-required-hours'        => 'ساعات موظفی تمام‌وقت',
+                    'full-time-required-hours-suffix' => ' ساعت در هفته',
+                ],
+            ],
+
+            'flexibility' => [
+                'title'   => 'انعطاف‌پذیری',
+                'entries' => [
+                    'status'                     => 'وضعیت',
+                    'two-weeks-calendar'         => 'تقویم دوهفته‌ای',
+                    'two-weeks-calendar-tooltip' => 'برنامه کاری دوهفته‌ای متناوب را فعال می‌کند.',
+                    'flexible-hours'             => 'ساعات کاری شناور',
+                    'flexible-hours-tooltip'     => 'به کارمندان اجازه می‌دهد ساعات کاری شناور داشته باشند.',
+                ],
+            ],
+        ],
+    ],
+];

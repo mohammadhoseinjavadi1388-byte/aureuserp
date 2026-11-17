@@ -1,0 +1,8 @@
+<?php
+
+return [
+    'navigation' => [
+        'title' => 'ویژگی‌ها',
+        'group' => 'محصولات',
+    ],
+];
